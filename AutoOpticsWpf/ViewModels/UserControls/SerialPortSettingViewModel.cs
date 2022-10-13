@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using AutoOpticsWpf.Utils;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -111,11 +112,11 @@ namespace AutoOpticsWpf.ViewModels.UserControls
             IsPortOpened = spManager.IsPortOpen();
 
             PortNameArr = spManager.GetSerialPortNameArr();
+            PortName = PortNameArr.Length > 0 ? PortNameArr[0] : "";
             BaudRateArr = new[] { 9600, 19200, 38400, 57600, 115200 };
             DataBitsArr = new[] { 5, 6, 7, 8 };
             ParityArr = new [] { Parity.None, Parity.Odd, Parity.Even, Parity.Mark, Parity.Space };
             StopBitsArr = new[] { StopBits.One, StopBits.OnePointFive, StopBits.Two, StopBits.None };
-            PortName = PortNameArr[0];
             BaudRate = 9600;
             DataBits = 8;
             Parity = Parity.None;

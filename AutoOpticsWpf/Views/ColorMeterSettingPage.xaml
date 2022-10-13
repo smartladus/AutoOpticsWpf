@@ -29,10 +29,10 @@
                     <hc:UniformSpacingPanel Spacing="12" Orientation="Vertical" HorizontalAlignment="Left">
                         <Button Content="连接色度计"
                                 Style="{StaticResource ButtonPrimary}"/>
-                        <Expander Width="220" IsExpanded="{Binding ElementName=TbAutoConnect, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}">
+                        <Expander Width="220" IsExpanded="{Binding ElementName=TbAutoConnect, Path=IsChecked}">
                             <Expander.Header>
                                 <hc:UniformSpacingPanel Spacing="8" Orientation="Horizontal">
-                                    <TextBlock Text="自动连接" Height="16"/>
+                                    <TextBlock Text="手动设置连接" Height="16"/>
                                     <ToggleButton
                                         x:Name="TbAutoConnect"
                                         IsChecked="True"
