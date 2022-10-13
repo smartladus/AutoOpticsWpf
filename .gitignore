@@ -1,0 +1,8 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs
+/AutoOpticsWpf/bin/x64/Debug/net6.0-windows
+/AutoOpticsWpf/bin/x86/Debug/net6.0-windows
+/AutoOpticsWpf/obj
