@@ -39,6 +39,20 @@
 
   <ItemGroup>
     <Folder Include="UserControls\" />
+    <Folder Include="ViewModels\UserControls\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\HomePage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\HomePage.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

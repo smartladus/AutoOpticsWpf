@@ -28,14 +28,15 @@
                 <hc:ScrollViewer Grid.Column="0" Grid.RowSpan="2" IsInertiaEnabled="True">
                     <hc:UniformSpacingPanel Spacing="12" Orientation="Vertical" HorizontalAlignment="Left">
                         <Button Content="连接色度计"
-                                Style="{StaticResource ButtonPrimary}"/>
+                                Style="{StaticResource ButtonPrimary}"
+                                Command="{Binding ConnectCaDeviceCommand}"/>
                         <Expander Width="220" IsExpanded="{Binding ElementName=TbAutoConnect, Path=IsChecked}">
                             <Expander.Header>
                                 <hc:UniformSpacingPanel Spacing="8" Orientation="Horizontal">
                                     <TextBlock Text="手动设置连接" Height="16"/>
                                     <ToggleButton
                                         x:Name="TbAutoConnect"
-                                        IsChecked="True"
+                                        IsChecked="{Binding UseMannualSetting}"
                                         HorizontalAlignment="Center"
                                         Style="{StaticResource ToggleButtonSwitch}"
                                         hc:VisualElement.HighlightBrush="{DynamicResource DangerBrush}"/>

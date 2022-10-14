@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO.Ports;
 using System.Text;
-using System.Threading.Tasks;
 using AutoOpticsWpf.Models;
 using CASDK2;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace AutoOpticsWpf.Utils
 {
@@ -15,6 +15,13 @@ namespace AutoOpticsWpf.Utils
         public CaException(string message) : base(message) { }
         public CaException(string message, Exception innerException) : base(message, innerException) { }
     }
+
+    public class CaStatusChangedMessage : ValueChangedMessage<bool>
+    {
+        public CaStatusChangedMessage(bool connected) : base(connected)
+        { }
+    }
+
 
     /// <summary>
     /// 基础测试数据接收事件参数，用于传递收到亮度和色坐标值
@@ -143,6 +150,7 @@ namespace AutoOpticsWpf.Utils
             {
                 AutoConnect();
             }
+            WeakReferenceMessenger.Default.Send(new CaStatusChangedMessage(IsDevConnected()));
             return this;
         }
 
@@ -232,6 +240,32 @@ namespace AutoOpticsWpf.Utils
         {
             Func<int, int> funcZeoCal = ExeCalZero;
             PerformAction(objCa.SetExeCalZeroCallback(funcZeoCal), "Set function for zero calibration event");      //Set function for zero calibration event
+        }
+
+        public string GetCaDeviceStatStr(bool isSimple)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (isSimple)
+            {
+                sb.Append("CA Device ")
+                    .Append(IsDevConnected() ? "CONNECTED" : "DISCONNECTED");
+                if (IsDevConnected())
+                {
+                    // TODO: 输出CA设备的基本配置
+                }
+            }
+            else
+            {
+                sb.Append("Status: ")
+                    .Append(IsDevConnected() ? "CONNECTED" : "DISCONNECTED")
+                    .Append(" ;Device Name: ")
+                    .Append("CA Device");
+                if (IsDevConnected())
+                {
+                    // TODO: 输出CA设备的基本配置
+                }
+            }
+            return sb.ToString();
         }
     }
 }

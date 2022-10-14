@@ -8,6 +8,33 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="8">
+        <Grid.Resources>
+            <Style TargetType="ListBox" BasedOn="{StaticResource ListBoxBaseStyle}">
+                <Setter Property="hc:BorderElement.CornerRadius" Value="4"/>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+                            <Setter Property="Margin" Value="0, 0, 0, 2"/>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBox">
+                            <Border  
+                                CornerRadius="8"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                Padding="8">
+                                <ScrollViewer>
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -16,25 +43,49 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Column="0" Grid.Row="0" Background="AntiqueWhite">
-            <Button Content="串口设置" Click="ConnectSerialPort"/>
-            <Button Content="色度计设置" Click="SendStringData"/>
-            <Button Content="发送十六进制信息" Click="SendHexData"/>
-            <Button Content="连接CA410" Click="ConnectCaDevice"/>
-            <Button Content="读取信息" Click="GetInfo"/>
-            <Button Content="测量光学数据" Click="GetOpticsData"/>
-        </StackPanel>
-        <hc:TransitioningContentControl  Grid.Column="1" Grid.Row="0" Margin="15,0, 0,0">
+        <ListBox Grid.Row="0" Grid.Column="0" SelectionChanged="Selector_OnSelectionChanged" x:Name="Box">
+            <ListBoxItem Content="主页"></ListBoxItem>
+            <ListBoxItem Content="串口设置" ></ListBoxItem>
+            <ListBoxItem Content="色度计设置"></ListBoxItem>
+        </ListBox>
+        <hc:TransitioningContentControl  Grid.Column="1" Grid.Row="0" Margin="8,0, 0,0">
             <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden" BorderThickness="0"/>
         </hc:TransitioningContentControl>
-        <Border  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                 Margin="0, 8, 0, 0"
-                 Style="{StaticResource BorderTipPrimary}">
-            <hc:SimpleStackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="COM1 OPENED, 9600, None, 8, 1"/>
-                <hc:Divider Orientation="Vertical"></hc:Divider>
-                <TextBlock VerticalAlignment="Center" Text="Color Meter Connected"/>
-            </hc:SimpleStackPanel>
-        </Border>
+        <hc:Row Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Margin="0, 8, 0, 0" Gutter="8">
+            <hc:Row.Resources>
+                <Style TargetType="Border"
+                       BasedOn="{StaticResource BorderTipDanger}"
+                       x:Key="TbSerialPortStyle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSerialPortOpened}" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource LightSuccessBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource SuccessBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="Border"
+                       BasedOn="{StaticResource BorderTipDanger}"
+                       x:Key="TbCaDeviceStyle">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsCaDeviceConnected}" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource LightSuccessBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource SuccessBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </hc:Row.Resources>
+            <hc:Col Span="12">
+                <Border Style="{StaticResource TbSerialPortStyle}">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SerialPortStat}"/>
+                </Border>
+            </hc:Col>
+            <hc:Col Span="12">
+                <Border Style="{StaticResource TbCaDeviceStyle}">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CaDeviceStat}"/>
+                </Border>
+            </hc:Col>
+        </hc:Row>
+        
     </Grid>
 </Window>

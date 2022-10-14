@@ -169,37 +169,43 @@ namespace AutoOpticsWpf.Utils
             return this;
         }
 
-        public string GetSerialPortSettingStr(bool isSimple)
+        public string GetSerialPortStatStr(bool isSimple)
         {
             StringBuilder sb = new StringBuilder();
             if (isSimple)
             {
                 sb.Append(_serialPort.PortName)
                     .Append(" ")
-                    .Append(_serialPort.IsOpen ? "OPENED" : "CLOSED")
-                    .Append(", ")
-                    .Append(_serialPort.BaudRate)
-                    .Append(", ")
-                    .Append(_serialPort.Parity)
-                    .Append(", ")
-                    .Append(_serialPort.DataBits)
-                    .Append(", ")
-                    .Append(_serialPort.StopBits);
+                    .Append(_serialPort.IsOpen ? "OPENED" : "CLOSED");
+                if (_serialPort.IsOpen)
+                {
+                    sb.Append(", ")
+                        .Append(_serialPort.BaudRate)
+                        .Append(", ")
+                        .Append(_serialPort.Parity)
+                        .Append(", ")
+                        .Append(_serialPort.DataBits)
+                        .Append(", ")
+                        .Append(_serialPort.StopBits);
+                }
             }
             else
             {
                 sb.Append("Status: ")
                     .Append(_serialPort.IsOpen ? "OPENED" : "CLOSED")
                     .Append(" ;Port Name: ")
-                    .Append(_serialPort.PortName)
-                    .Append(" ;Baud Rate: ")
-                    .Append(_serialPort.BaudRate)
-                    .Append(" ;Parity: ")
-                    .Append(_serialPort.Parity)
-                    .Append(" ;DataBits: ")
-                    .Append(_serialPort.DataBits)
-                    .Append(" ;StopBits: ")
-                    .Append(_serialPort.StopBits);
+                    .Append(_serialPort.PortName);
+                if (_serialPort.IsOpen)
+                {
+                    sb.Append(" ;Baud Rate: ")
+                        .Append(_serialPort.BaudRate)
+                        .Append(" ;Parity: ")
+                        .Append(_serialPort.Parity)
+                        .Append(" ;DataBits: ")
+                        .Append(_serialPort.DataBits)
+                        .Append(" ;StopBits: ")
+                        .Append(_serialPort.StopBits);
+                }
             }
             return sb.ToString();
         }

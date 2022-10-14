@@ -4,14 +4,15 @@ using AutoOpticsWpf.ViewModels;
 namespace AutoOpticsWpf.Views
 {
     /// <summary>
-    /// ColorMeterSettingPage.xaml 的交互逻辑
+    /// SerialPortSetting.xaml 的交互逻辑
     /// </summary>
-    public partial class ColorMeterSettingPage : Page
+    public partial class HomePage : Page
     {
-        public ColorMeterSettingPage()
+        public HomePage()
         {
             InitializeComponent();
-            DataContext = new ColorMeterSettingViewModel();
+            DataContext = new HomeViewModel();
+
         }
     }
 }

@@ -137,12 +137,12 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="自动重发：" Width="60" VerticalAlignment="Center" />
                                     <ToggleButton
-                                    IsChecked="True"
+                                    IsChecked="{Binding TxAutoRepeat}"
                                     HorizontalAlignment="Center"
                                     Style="{StaticResource ToggleButtonSwitch}"
                                     hc:VisualElement.HighlightBrush="{DynamicResource DangerBrush}"/>
                                     <TextBlock Text="次数：" Margin="8, 0, 0, 0" Width="40" VerticalAlignment="Center" />
-                                    <hc:NumericUpDown ></hc:NumericUpDown>
+                                    <hc:NumericUpDown IsEnabled="{Binding TxAutoRepeat}"></hc:NumericUpDown>
                                 </StackPanel>
                             </hc:UniformSpacingPanel>
                         </Border>

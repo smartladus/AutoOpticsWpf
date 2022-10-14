@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace AutoOpticsWpf.ViewModels.UserControls
+namespace AutoOpticsWpf.ViewModels
 {
     internal class SerialPortSettingViewModel : ObservableRecipient
     {
@@ -70,6 +70,7 @@ namespace AutoOpticsWpf.ViewModels.UserControls
 
         private bool _txInHex;
         private string _tbTxStr;
+        private bool _txAutoRepeat;
 
 
         public bool RxInHex
@@ -107,6 +108,12 @@ namespace AutoOpticsWpf.ViewModels.UserControls
             set => SetProperty(ref _tbTxStr, value);
         }
 
+        public bool TxAutoRepeat
+        {
+            get => _txAutoRepeat;
+            set => SetProperty(ref _txAutoRepeat, value);
+        }
+
         public SerialPortSettingViewModel()
         {
             IsPortOpened = spManager.IsPortOpen();
@@ -115,7 +122,7 @@ namespace AutoOpticsWpf.ViewModels.UserControls
             PortName = PortNameArr.Length > 0 ? PortNameArr[0] : "";
             BaudRateArr = new[] { 9600, 19200, 38400, 57600, 115200 };
             DataBitsArr = new[] { 5, 6, 7, 8 };
-            ParityArr = new [] { Parity.None, Parity.Odd, Parity.Even, Parity.Mark, Parity.Space };
+            ParityArr = new[] { Parity.None, Parity.Odd, Parity.Even, Parity.Mark, Parity.Space };
             StopBitsArr = new[] { StopBits.One, StopBits.OnePointFive, StopBits.Two, StopBits.None };
             BaudRate = 9600;
             DataBits = 8;
@@ -129,11 +136,18 @@ namespace AutoOpticsWpf.ViewModels.UserControls
 
             TxInHex = false;
             TbTxStr = "";
+            TxAutoRepeat = false;
 
             ConnectSerialPortCommand = new RelayCommand(ConnectSerialPort);
             SendMsgCommand = new RelayCommand(SendMsg);
 
             spManager.ComDataReceived += OnComDataReceived;
+
+            spManager.SetPortName(PortName)
+                .SetBaudRate(BaudRate)
+                .SetDataBits(DataBits)
+                .SetParity(Parity)
+                .SetStopBits(StopBits);
 
             WeakReferenceMessenger.Default.Register<SerialPortStatusChangedMessage>(this, (r, m) =>
             {
@@ -156,13 +170,13 @@ namespace AutoOpticsWpf.ViewModels.UserControls
                     .SetParity(Parity)
                     .SetStopBits(StopBits)
                     .OpenPort();
-                Trace.WriteLine(spManager.GetSerialPortSettingStr(false));
+                Trace.WriteLine(spManager.GetSerialPortStatStr(false));
             }
             else
             {
                 Trace.WriteLine("closing serial port");
                 spManager.ClosePort();
-                Trace.WriteLine(spManager.GetSerialPortSettingStr(false));
+                Trace.WriteLine(spManager.GetSerialPortStatStr(false));
             }
         }
 

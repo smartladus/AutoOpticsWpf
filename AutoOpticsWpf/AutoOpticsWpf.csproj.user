@@ -24,6 +24,9 @@
     <Page Update="Views\ColorMeterSettingPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\HomePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\SerialPortSettingPage.xaml">
       <SubType>Designer</SubType>
     </Page>
